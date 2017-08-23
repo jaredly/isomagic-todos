@@ -1,0 +1,3 @@
+B ../_build/default/shared
+FLG -open Shared__ -w -40
+FLG -ppx "../_build/default/.ppx/ppx_magic/ppx.exe --as-ppx --cookie 'library-name="shared"'"

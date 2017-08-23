@@ -1,0 +1,20 @@
+####{BSB GENERATED: NO EDIT
+FLG -ppx /Users/jared/clone/tools/isomagic-todos/./node_modules/.bin/ppx_magic
+FLG -ppx /Users/jared/clone/tools/isomagic-todos/./node_modules/.bin/ppx_guard
+FLG -ppx /Users/jared/clone/tools/isomagic-todos/./node_modules/.bin/ppx_async
+FLG -ppx '/Users/jared/clone/tools/isomagic-todos/node_modules/bs-platform/bin/reactjs_jsx_ppx_2.exe'
+FLG -ppx /Users/jared/clone/tools/isomagic-todos/node_modules/bs-platform/bin/bsppx.exe
+S /Users/jared/clone/tools/isomagic-todos/node_modules/bs-platform/lib/ocaml/js
+B /Users/jared/clone/tools/isomagic-todos/node_modules/bs-platform/lib/ocaml/js
+FLG -nostdlib -w -40 -w -30 -no-alias-deps -color always
+S /Users/jared/clone/tools/isomagic-todos/node_modules/reason-react/lib/ocaml/js
+B /Users/jared/clone/tools/isomagic-todos/node_modules/reason-react/lib/ocaml/js
+S /Users/jared/clone/tools/isomagic-todos/node_modules/bs-glamor/lib/ocaml/js
+B /Users/jared/clone/tools/isomagic-todos/node_modules/bs-glamor/lib/ocaml/js
+S src
+B lib/bs/js/src
+S src/shared
+B lib/bs/js/src/shared
+S src/client
+B lib/bs/js/src/client
+####BSB GENERATED: NO EDIT}

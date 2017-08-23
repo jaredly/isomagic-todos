@@ -1,0 +1,19 @@
+####{BSB GENERATED: NO EDIT
+FLG -ppx /Users/jared/clone/tools/isomagic-todos/server/../node_modules/.bin/ppx_magic_native
+FLG -ppx /Users/jared/clone/tools/isomagic-todos/server/../node_modules/.bin/ppx_guard
+FLG -ppx /Users/jared/clone/tools/isomagic-todos/server/../node_modules/.bin/ppx_async
+FLG -ppx '/Users/jared/clone/tools/isomagic-todos/node_modules/bs-platform/bin/reactjs_jsx_ppx_2.exe'
+FLG -ppx /Users/jared/clone/tools/isomagic-todos/node_modules/bs-platform/bin/bsppx.exe
+S /Users/jared/clone/tools/isomagic-todos/node_modules/bs-platform/lib/ocaml/native
+B /Users/jared/clone/tools/isomagic-todos/node_modules/bs-platform/lib/ocaml/native
+FLG -nostdlib -no-alias-deps -color always
+S ../src
+B lib/bs/native/../src
+S ../src/server
+B lib/bs/native/../src/server
+S ../src/shared
+B lib/bs/native/../src/shared
+S ../src/client
+B lib/bs/native/../src/client
+PKG lwt lwt.unix cohttp cohttp.lwt yojson
+####BSB GENERATED: NO EDIT}

@@ -1,0 +1,7 @@
+(jbuild_version 1)
+
+(library (
+  (name shared)
+  (preprocess (pps (ppx_magic)))
+  ))
+
