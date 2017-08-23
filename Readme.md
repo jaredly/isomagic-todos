@@ -1,6 +1,6 @@
 # Isomagic Todos App
 
-![screenshot](screenshot.png)
+<img src=screenshot.png width=400>
 
 Here's an example app that does a couple of neat tricks:
 
