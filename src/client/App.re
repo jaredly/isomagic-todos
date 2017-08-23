@@ -33,12 +33,12 @@ let toggleItem item update => {
   let item = item.completed === None
     ? {...item, completed: Some (jsNow())}
     : {...item, completed: None};
-  Api.updateItem item update
+  Api.UpdateTodo.run item update
 };
 let editItem item text update => if (text == "") {
-  Api.removeItem item.id update
+  Api.RemoveTodo.run item.id update
 } else {
-  text !== item.text ? Api.updateItem {...item, text} update : ()
+  text !== item.text ? Api.UpdateTodo.run {...item, text} update : ()
 };
 
 let module Todos = {
@@ -65,7 +65,7 @@ let module Todos = {
         <Editor
           value=""
           className=(Glamor.(css[padding "10px 20px"]))
-          onChange=(fun text => Api.addItem text updateTodos)
+          onChange=(fun text => Api.AddTodo.run text updateTodos)
           placeholder="Add an item"
           clear=true
         />

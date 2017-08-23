@@ -9,36 +9,18 @@ let post: string => Js.Json.t => (Js.Json.t => unit) => unit = [%bs.raw {|
   }
 |}];
 
-let removeItem id onDone => {
-  post "/todo/remove" (int__to_json id) (fun data => {
-    switch (todos__from_json data) {
+let module Post (Config: SApi.Post) => {
+  let run body onDone => post Config.path (Config.request__to_json body) (fun data => {
+    switch (Config.response__from_json data) {
     | None => Js.log "Failed to parse data"
-    | Some todos => {
-      Js.log2 "New todos" (todos__to_devtools todos);
-      onDone todos
+    | Some result => {
+      Js.log (Config.response__to_devtools result);
+      onDone result
     }
     }
   })
 };
 
-let updateItem item onDone => {
-  post "/todo" (todo__to_json item) (fun data => {
-    switch (todos__from_json data) {
-    | None => Js.log "Failed to parse data"
-    | Some todos => {
-      Js.log2 "New todos" (todos__to_devtools todos);
-      onDone todos
-    }
-    }
-  })
-};
-
-let addItem text onDone => post "/todo/add" (new_todo__to_json text) (fun data => {
-    switch (todos__from_json data) {
-    | None => Js.log "Failed to parse data"
-    | Some todos => {
-      Js.log2 "New todos" (todos__to_devtools todos);
-      onDone todos
-    }
-    }
-  });
+let module RemoveTodo = Post (SApi.Endpoints.RemoveTodo);
+let module AddTodo = Post (SApi.Endpoints.AddTodo);
+let module UpdateTodo = Post (SApi.Endpoints.UpdateTodo);

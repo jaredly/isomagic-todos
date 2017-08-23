@@ -1,6 +1,4 @@
 
-let m: Yojson.json = `String "hi";
-
 module type Endpoint = {
   type request;
   type response;
