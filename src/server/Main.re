@@ -29,7 +29,7 @@ let withParsedBody body parse fn => withBody body (fun body => switch (maybe_par
   }
 });
 
-Server.get_prefix "/" (Server.serveStatic "../public");
+Server.get_prefix "/" (Server.serveStatic "./public");
 
 Server.get "/todos" (fun _ _ _ => Server.json (todos__to_yojson (!appState).todos));
 

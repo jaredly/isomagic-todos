@@ -5,7 +5,9 @@
     "clean": "bsb -clean-world",
     "build": "bsb -make-world",
     "watch": "bsb -make-world -w",
-    "server": "bsb -make-world -backend native"
+    "bundle": "webpack",
+    "server": "cd server && bsb -make-world -backend native",
+    "start": "./server/lib/bs/native/main.native"
   },
   "keywords": [
     "BuckleScript"
