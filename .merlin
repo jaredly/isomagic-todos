@@ -1,7 +1,7 @@
 ####{BSB GENERATED: NO EDIT
 FLG -ppx /Users/jared/clone/tools/isomagic-todos/./node_modules/.bin/ppx_magic
 FLG -ppx /Users/jared/clone/tools/isomagic-todos/./node_modules/.bin/ppx_guard
-FLG -ppx /Users/jared/clone/tools/isomagic-todos/./node_modules/.bin/ppx_async
+FLG -ppx /Users/jared/clone/tools/isomagic-todos/./node_modules/.bin/reason_async
 FLG -ppx '/Users/jared/clone/tools/isomagic-todos/node_modules/bs-platform/bin/reactjs_jsx_ppx_2.exe'
 FLG -ppx /Users/jared/clone/tools/isomagic-todos/node_modules/bs-platform/bin/bsppx.exe
 S /Users/jared/clone/tools/isomagic-todos/node_modules/bs-platform/lib/ocaml/js

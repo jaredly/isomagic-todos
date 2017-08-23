@@ -17,7 +17,7 @@
   "ppx-flags": [
     "./node_modules/.bin/ppx_magic",
     "./node_modules/.bin/ppx_guard",
-    "./node_modules/.bin/ppx_async"
+    "./node_modules/.bin/reason_async"
   ],
   "bs-dependencies" : [
     "reason-react",

@@ -20,13 +20,12 @@
     }
   ],
   "entries": [{"kind": "native", "main": "Main"}],
-  "bsc-flags": ["-w", "-40", "-w", "-30"],
+  "bsc-flags": ["-w", "-40", "-w", "-30", "-bs-super-errors"],
   "ocamlfind-dependencies": ["lwt", "lwt.unix", "cohttp", "cohttp.lwt", "yojson"],
-  "bsc-flags": ["-bs-super-errors"],
   "reason": {"react-jsx": 2},
   "ppx-flags": [
     "../node_modules/.bin/ppx_magic_native",
     "../node_modules/.bin/ppx_guard",
-    "../node_modules/.bin/ppx_async"
+    "../node_modules/.bin/reason_async"
   ]
 }

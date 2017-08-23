@@ -1,8 +1,8 @@
 {
-  "name": "bstest",
+  "name": "isomagic-todos",
   "version": "0.1.0",
   "scripts": {
-    "clean": "bsb -clean-world",
+    "clean": "bsb -clean-world && cd server && bsb -clean-world",
     "build": "bsb -make-world",
     "watch": "bsb -make-world -w",
     "bundle": "webpack",
@@ -14,9 +14,9 @@
   ],
   "license": "MIT",
   "devDependencies": {
+    "bs-glamor": "^0.1.3",
     "bs-platform": "git+https://github.com/bsansouci/bsb-native.git",
-    "ppx_autoserialize": "git+https://github.com/jaredly/ppx_autoserialize.git",
-    "bs-glamor": "^0.1.3"
+    "ppx_autoserialize": "file:../ppx_autoserialize"
   },
   "dependencies": {
     "ppx_guard": "git+https://github.com/jaredly/ppx_guard.git",

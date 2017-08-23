@@ -19,7 +19,7 @@ let maybe_parse text => try(Some (Yojson.Safe.from_string text)) {
 | _ => None
 };
 
-let withBody body fn => Lwt.(Cohttp_lwt_body.to_string body >>= fn);
+/* let withBody body fn => Lwt.(Cohttp_lwt_body.to_string body >>= fn);
 let withJsonBody body fn => withBody body (fun body => fn (maybe_parse body));
 let withParsedBody body parse fn => withBody body (fun body => switch (maybe_parse body) {
   | None => CoServer.respond_string status::`Bad_request body::"" ()
@@ -27,11 +27,49 @@ let withParsedBody body parse fn => withBody body (fun body => switch (maybe_par
     | None => CoServer.respond_string status::`Bad_request body::"" ()
     | Some data => fn data
   }
-});
+}); */
 
 Server.get_prefix "/" (Server.serveStatic "./public");
 
-Server.get "/todos" (fun _ _ _ => Server.json (todos__to_yojson (!appState).todos));
+module type E = {};
+
+let _: list (module E) = [
+  (module Server.Get SApi.Endpoints.Todos {
+    let handle req => (!appState).todos
+  }),
+  (module Server.Post SApi.Endpoints.AddTodo {
+    let handle req text => {
+      let id = (!appState).nextId;
+      let todo = {completed: None, id, text};
+      let todos = List.append (!appState).todos [todo];
+      appState := {
+        nextId: id + 1,
+        todos,
+      };
+      todos
+    }
+  }),
+  (module Server.Post SApi.Endpoints.RemoveTodo {
+    let handle req id => {
+      let todos = List.filter (fun item => item.id !== id) (!appState).todos;
+      appState := {...!appState, todos};
+      todos;
+    }
+  }),
+  (module Server.Post SApi.Endpoints.UpdateTodo {
+    let handle req data => {
+      let todos = List.map (fun item => item.id === data.id ? data : item) (!appState).todos;
+      appState := {
+        ...!appState,
+        todos,
+      };
+      todos;
+    }
+  }),
+];
+
+
+/* Server.get "/todos" (fun _ _ _ => Server.json (todos__to_yojson (!appState).todos));
 
 Server.post "/todo/add" (fun _ body _ => withParsedBody body new_todo__from_yojson (fun text => {
   let id = (!appState).nextId;
@@ -72,7 +110,7 @@ Server.post "/todo" Lwt.(fun _ body _ => {
     todos,
   };
   Server.json (todos__to_yojson todos);
-});
+}); */
 
 /* fallback */
 Server.get_prefix "/" (fun _ _ _ _ => {

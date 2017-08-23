@@ -70,6 +70,10 @@ let handle_prefix meth path fn => {
   ]
 };
 
+let maybe_parse text => try(Some (Yojson.Safe.from_string text)) {
+| _ => None
+};
+
 let get = handle `GET;
 let post = handle `POST;
 let delete = handle `DELETE;
@@ -78,6 +82,30 @@ let post_prefix = handle_prefix `POST;
 let delete_prefix = handle_prefix `DELETE;
 
 
+
+
+let module Get (Config: SApi.Get) (Handler: {let handle: Cohttp.Request.t => Config.response; }) => {
+  handle `GET Config.path (fun req _ _ => json (Config.response__to_yojson (Handler.handle req)));
+};
+
+let module Let_syntax = {
+  let bind value ::f => Lwt.bind value f;
+  let map value ::f => Lwt.map f value;
+};
+
+let module Post (Config: SApi.Post) (Handler: {let handle: Cohttp.Request.t => Config.request => Config.response; }) => {
+  handle `POST Config.path (fun req body _ => {
+    [%await let body = Cohttp_lwt_body.to_string body];
+
+    [%guard let Some(data) = maybe_parse body]
+    [@else CoServer.respond_string status::`Bad_request body::"" ()];
+
+    [%guard let Some(data) = Config.request__from_yojson data]
+    [@else CoServer.respond_string status::`Bad_request body::"" ()];
+
+    json (Config.response__to_yojson (Handler.handle req data))
+  });
+};
 
 
 
