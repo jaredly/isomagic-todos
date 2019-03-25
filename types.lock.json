@@ -1,0 +1,228 @@
+{
+  "$schemaVersion": 2,
+  "versions": [
+    {
+      "entries": [
+        {
+          "moduleName": "Types",
+          "modulePath": [],
+          "engines": [
+            [
+              ["ezjsonm"],
+              1
+            ],
+            [
+              ["Js.Json"],
+              1
+            ]
+          ],
+          "name": "todo"
+        },
+        {
+          "moduleName": "Types",
+          "modulePath": [],
+          "engines": [
+            [
+              ["ezjsonm"],
+              1
+            ],
+            [
+              ["Js.Json"],
+              1
+            ]
+          ],
+          "name": "todos"
+        },
+        {
+          "moduleName": "Types",
+          "modulePath": [],
+          "engines": [
+            [
+              ["ezjsonm"],
+              1
+            ],
+            [
+              ["Js.Json"],
+              1
+            ]
+          ],
+          "name": "id"
+        },
+        {
+          "moduleName": "Types",
+          "modulePath": [],
+          "engines": [
+            [
+              ["ezjsonm"],
+              1
+            ],
+            [
+              ["Js.Json"],
+              1
+            ]
+          ],
+          "name": "text"
+        }
+      ],
+      "typeMap": [
+        [
+          [
+            "Types",
+            [],
+            "id"
+          ],
+          [
+            [],
+            {
+              "name": "id",
+              "variables": [],
+              "body": [
+                "Expr",
+                [
+                  "Reference",
+                  [
+                    "Builtin",
+                    "int"
+                  ],
+                  []
+                ]
+              ]
+            }
+          ]
+        ],
+        [
+          [
+            "Types",
+            [],
+            "text"
+          ],
+          [
+            [],
+            {
+              "name": "text",
+              "variables": [],
+              "body": [
+                "Expr",
+                [
+                  "Reference",
+                  [
+                    "Builtin",
+                    "string"
+                  ],
+                  []
+                ]
+              ]
+            }
+          ]
+        ],
+        [
+          [
+            "Types",
+            [],
+            "todo"
+          ],
+          [
+            [],
+            {
+              "name": "todo",
+              "variables": [],
+              "body": [
+                "Record",
+                [
+                  [
+                    "text",
+                    [
+                      "Reference",
+                      [
+                        "Public",
+                        [
+                          "Types",
+                          [],
+                          "text"
+                        ]
+                      ],
+                      []
+                    ]
+                  ],
+                  [
+                    "id",
+                    [
+                      "Reference",
+                      [
+                        "Public",
+                        [
+                          "Types",
+                          [],
+                          "id"
+                        ]
+                      ],
+                      []
+                    ]
+                  ],
+                  [
+                    "completed",
+                    [
+                      "Reference",
+                      [
+                        "Builtin",
+                        "option"
+                      ],
+                      [
+                        [
+                          "Reference",
+                          [
+                            "Builtin",
+                            "int"
+                          ],
+                          []
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            }
+          ]
+        ],
+        [
+          [
+            "Types",
+            [],
+            "todos"
+          ],
+          [
+            [],
+            {
+              "name": "todos",
+              "variables": [],
+              "body": [
+                "Expr",
+                [
+                  "Reference",
+                  [
+                    "Builtin",
+                    "list"
+                  ],
+                  [
+                    [
+                      "Reference",
+                      [
+                        "Public",
+                        [
+                          "Types",
+                          [],
+                          "todo"
+                        ]
+                      ],
+                      []
+                    ]
+                  ]
+                ]
+              ]
+            }
+          ]
+        ]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "$schemaVersion": 2,
+  "version": 1,
+  "lockedTypes": "./src/shared/LockedTypes.re",
+  "engines": {
+    "Js.Json": {
+      "output": "./src/client/Serde.re"
+    },
+    "ezjsonm": {
+      "output": "./src/server/Serde.re"
+    }
+  },
+  "entries": [
+    { "file": "./src/shared/Types.re", "type": "todo" },
+    { "file": "./src/shared/Types.re", "type": "todos" },
+    { "file": "./src/shared/Types.re", "type": "id" },
+    { "file": "./src/shared/Types.re", "type": "text" }
+  ],
+  "custom": []
+}

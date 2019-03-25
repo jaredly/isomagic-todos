@@ -1,97 +1,96 @@
-
 open! Types;
 
-let str = ReasonReact.stringToElement;
-let style = ReactDOMRe.Style.make;
+let str = ReasonReact.string;
 
-let module TodoItem = {
-  let component = ReasonReact.statelessComponent "Todo";
-  let make ::item ::onToggle ::onEdit _ => {
+// let style = ReactDOMRe.Style.make;
+
+module TodoItem = {
+  let component = ReasonReact.statelessComponent("Todo");
+  let make = (~item, ~onToggle, ~onEdit, _) => {
     ...component,
-    render: fun _ => <div
-      className=(Glamor.(css [
-        backgroundColor "white",
-        cursor "pointer",
-        flexDirection "row",
-        padding "10px",
-        Selector ":hover" [
-          backgroundColor "#eee"
-        ]
-      ]))
-      onClick=onToggle
-    >
-      <input _type="checkbox" checked=(item.completed !== None |> Js.Boolean.to_js_boolean) />
-      <div style=(style flexBasis::"10px" ()) />
-      <Editor value=(item.text) placeholder="" onChange=onEdit />
-    </div>
-  }
+    render: (_) =>
+      <div
+        className=Css.(
+                    style([
+                      backgroundColor(white),
+                      cursor(`pointer),
+                      flexDirection(`row),
+                      padding(px(10)),
+                      hover([ backgroundColor(hex("eee")) ])
+                    ])
+                  )
+        onClick=onToggle>
+        <input type_="checkbox" checked=(item.completed !== None ) />
+        <div style=(ReactDOMRe.Style.make(~flexBasis="10px", ())) />
+        <Editor value=item.text placeholder="" onChange=onEdit />
+      </div>
+  };
 };
 
 let jsNow: unit => int = [%bs.raw "function() {return Date.now()}"];
 
-let toggleItem item update => {
-  let item = item.completed === None
-    ? {...item, completed: Some (jsNow())}
-    : {...item, completed: None};
-  Api.UpdateTodo.run item update
-};
-let editItem item text update => if (text == "") {
-  Api.RemoveTodo.run item.id update
-} else {
-  text !== item.text ? Api.UpdateTodo.run {...item, text} update : ()
+let toggleItem = (item, update) => {
+  let item =
+    item.completed === None ? {...item, completed: Some(jsNow())} : {...item, completed: None};
+  Api.UpdateTodo.run(item, update);
 };
 
-let module Todos = {
-  let component = ReasonReact.statefulComponent "Todos";
+let editItem = (item, text, update) =>
+  if (text == "") {
+    Api.RemoveTodo.run(item.id, update);
+  } else {
+    text !== item.text ? Api.UpdateTodo.run({...item, text}, update) : ();
+  };
+
+module Todos = {
+  let component = ReasonReact.reducerComponent("Todos");
   let url = "/todos";
   type state = todos;
-  type data = todos;
-  let make ::data _ => {
+  type action = state;
+  module Data = Serde.Modules.Todos;
+  let make = (~data, _) => {
     ...component,
-    initialState: fun () => data,
-    render: fun {state, update} => {
-      let updateTodos = (update (fun todos _ => ReasonReact.Update todos));
+    initialState: () => data,
+    reducer: (action, state) => ReasonReact.Update(action),
+    render: ({state, send}) => {
+      // let updateTodos = update((todos, _) => ReasonReact.Update(todos));
       <div>
-        (List.map
-          (fun item =>
-            <TodoItem
-              item
-              key=(item.id |> string_of_int)
-              onToggle=(fun _ => toggleItem item updateTodos)
-              onEdit=(fun text => editItem item text updateTodos)
-            />
-          ) state
-          |> Array.of_list |> ReasonReact.arrayToElement)
+        (
+          List.map(
+            (item) =>
+              <TodoItem
+                item
+                key=(item.id |> string_of_int)
+                onToggle=((_) => toggleItem(item, send))
+                onEdit=((text) => editItem(item, text, send))
+              />,
+            state
+          )
+          |> Array.of_list
+          |> ReasonReact.array
+        )
         <Editor
           value=""
-          className=(Glamor.(css[padding "10px 20px"]))
-          onChange=(fun text => Api.AddTodo.run text updateTodos)
+          className=Css.(style([padding2(~v=px(10), ~h=px(20))]))
+          onChange=((text) => Api.AddTodo.run(text, send))
           placeholder="Add an item"
           clear=true
         />
-      </div>
+      </div>;
     }
-  }
+  };
 };
 
-let module LoadedTodos = Loader.F Todos;
+module LoadedTodos = Loader.F(Todos);
 
-let module Page = {
-  let component = ReasonReact.statelessComponent "Page";
-  let make _children => {
+module Page = {
+  let component = ReasonReact.statelessComponent("Page");
+  let make = (_children) => {
     ...component,
-    render: fun _ =>
-      <div className=(Glamor.(css [
-        alignSelf "center",
-        margin "50px",
-        width "300px"
-      ]))>
-      <div className=(Glamor.(css [
-        margin "20px",
-        textAlign "center",
-        fontSize "1.3em",
-      ]))>
-        (str "A Nice Todo List")
+    render: (_) =>
+      <div className=Css.(style([alignSelf(`center), margin(px(50)), width(px(300))]))>
+        <div className=Css.(style([margin(px(20)), textAlign(`center), fontSize(em(1.3))]))>
+          (str("A Nice Todo List"))
         </div>
         <LoadedTodos />
       </div>
@@ -99,4 +98,5 @@ let module Page = {
 };
 
 Devtools.register();
-ReactDOMRe.renderToElementWithId <Page /> "index";
+
+ReactDOMRe.renderToElementWithId(<Page />, "index");

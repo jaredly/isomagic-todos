@@ -1,48 +1,66 @@
-
 module type Endpoint = {
   type request;
   type response;
   let path: string;
-  let method: [`GET | `POST];
+  let method: [ | `GET | `POST];
 };
 
+module type SerdeType = {
+  type t;
+  let serialize: t => Serde.target;
+  let deserialize: Serde.target => Belt.Result.t(t, list(string))
+};
+
+// TODO serializeResponse, deserializeResponse or something...
 module type Get = {
-  type response;
-  let path: string;
-};
-module type Post = {
-  type request;
-  type response;
+  module Response: SerdeType;
   let path: string;
 };
 
-let module Endpoints = {
+module type Post = {
+  module Request: SerdeType;
+  module Response: SerdeType;
+  let path: string;
+};
+
+
+// module type Serde = {
+//   type t;
+//   let serializeTodo: Types.todo => t;
+//   let deserializeTodo: t => Belt.Result.t(Types.todo, list(string));
+//   let serializeTodos: Types.todos => t;
+//   let deserializeTodos: t => Belt.Result.t(Types.todos, list(string));
+// };
+
+module Endpoints = {
   open Types;
-  let module Todos = {
-    type response = todos;
+  // open! Serde.Modules;
+  module Todos = {
+    module Response = Serde.Modules.Todos;
     let path = "/todos";
-    let method = `GET;
+    let pub_ = `GET;
   };
-  let module AddTodo = {
+  module AddTodo = {
+    module Request = Serde.Modules.Text;
+    module Response = Serde.Modules.Todos;
     type request = string;
     type response = todos;
     let path = "/todo/add";
-    let method = `POST;
+    let pub_ = `POST;
   };
-  let module RemoveTodo = {
-    type request = int;
-    type response = todos;
+  module RemoveTodo = {
+    module Request = Serde.Modules.Id;
+    module Response = Serde.Modules.Todos;
     let path = "/todo/remove";
-    let method = `POST;
+    let pub_ = `POST;
   };
-  let module UpdateTodo = {
-    type request = todo;
-    type response = todos;
+  module UpdateTodo = {
+    module Request = Serde.Modules.Todo;
+    module Response = Serde.Modules.Todos;
     let path = "/todo";
-    let method = `POST;
+    let pub_ = `POST;
   };
 };
-
 
 module type Config = {
   type t;
@@ -51,5 +69,4 @@ module type Config = {
   module Post: (Endpoint: Post) => Done;
 };
 
-let module Setup (Config: Config) => {
-};
+module Setup = (Config: Config) => {};

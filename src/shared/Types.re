@@ -1,17 +1,20 @@
 
+type id = int;
+type text = string;
+
 type person = {
-  id: int,
+  id,
   name: string,
   age: int,
-  friends: list int,
+  friends: list(int)
 };
 
 type todo = {
-  text: string,
-  id: int,
-  completed: option int,
+  text,
+  id,
+  completed: option(int)
 };
 
-type todos = list todo;
+type todos = list(todo);
 
 type new_todo = string;

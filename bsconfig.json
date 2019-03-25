@@ -1,26 +1,25 @@
-// This is the configuration file used by BuckleScript's build system bsb. Its documentation lives here: http://bucklescript.github.io/bucklescript/docson/#build-schema.json
-// BuckleScript comes with its own parser for bsconfig.json, which is normal JSON, with the extra support of comments and trailing commas.
 {
-  "name": "bstest",
+  "name": "isomagic-todos",
   "version": "0.1.0",
   "sources": [
     {
       "dir": "src",
       "subdirs": [
         "client",
-        "shared",
+        "shared"
       ]
     }
   ],
+  "refmt": 3,
   "bsc-flags": ["-w", "-40", "-w", "-30", "-bs-super-errors"],
-  "reason": {"react-jsx": 2},
+  "reason": {
+    "react-jsx": 2
+  },
   "ppx-flags": [
-    "./node_modules/.bin/ppx_magic",
-    "./node_modules/.bin/ppx_guard",
-    "./node_modules/.bin/reason_async"
+    "let-anything/ppx"
   ],
   "bs-dependencies" : [
     "reason-react",
-    "bs-glamor"
+    "bs-css"
   ]
 }

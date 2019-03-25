@@ -1,7 +1,7 @@
 
 /* let x = 10; */
 
-let register () => {
+let register = () => {
   [%bs.raw{| (() => {
 
     window.devtoolsFormatters = window.devtoolsFormatters || [];

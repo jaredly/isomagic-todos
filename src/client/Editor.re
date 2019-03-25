@@ -1,61 +1,76 @@
+let str = ReasonReact.string;
 
-let str = ReasonReact.stringToElement;
 let style = ReactDOMRe.Style.make;
-let evtValue event => (ReactDOMRe.domElementToObj (ReactEventRe.Form.target event))##value;
+
+let evtValue = (event) => ReactDOMRe.domElementToObj(ReactEventRe.Form.target(event))##value;
 
 type retainedProps = {value: string};
-let component = ReasonReact.statefulComponentWithRetainedProps "Editor";
-type state = option string;
-let make ::value ::onChange ::placeholder ::className="" ::clear=false _ => {
+
+let component = ReasonReact.reducerComponentWithRetainedProps("Editor");
+
+type state = option(string);
+
+let make = (~value, ~onChange, ~placeholder, ~className="", ~clear=false, _) => {
   ...component,
-  initialState: fun () => None,
-  retainedProps: {value: value},
-  willReceiveProps: fun {state, retainedProps} => switch state {
-  | None => None
-  | Some text => (retainedProps.value === value && value !== text) ? Some text : None
+  initialState: () => None,
+  retainedProps: {
+    value: value
   },
-  render: fun {state, update} => {
+  willReceiveProps: ({state, retainedProps}) =>
     switch state {
-    | None => <div
-        style=(style cursor::"text" ())
+    | None => None
+    | Some((text)) => retainedProps.value === value && value !== text ? Some(text) : None
+    },
+  reducer: (action, state) => ReasonReact.Update(action),
+  render: ({state, send}) =>
+    switch state {
+    | None =>
+      <div
+        style=(style(~cursor="text", ()))
         className
-        onClick=(fun evt => {
-          ReactEventRe.Mouse.stopPropagation evt;
-          (update (fun _ _ => ReasonReact.Update (Some value))) evt;
-          })
-      >(str (value === "" ? placeholder : value))</div>
-    | Some text => <input
+        onClick=(
+          (evt) => {
+            ReactEventRe.Mouse.stopPropagation(evt);
+            send(Some(value));
+          }
+        )>
+        (str(value === "" ? placeholder : value))
+      </div>
+    | Some((text)) =>
+      <input
         value=text
         placeholder
         className
-        autoFocus=(Js.Boolean.to_js_boolean true)
-        onChange=(update (fun evt _ => ReasonReact.Update (Some (evtValue evt))))
-        onClick=(fun evt => ReactEventRe.Mouse.stopPropagation evt)
-        onKeyDown=(fun evt => {
-          switch (ReactEventRe.Keyboard.key evt) {
-          | "Enter" => if (text == value) {
-            (update (fun _ _ => ReasonReact.Update None)) ()
-          } else {
-            onChange text;
-            if (clear) {
-              (update (fun _ _ => ReasonReact.Update (Some value))) ()
+        autoFocus=((true))
+        onChange=(evt => send(Some(evtValue(evt))))
+        onClick=((evt) => ReactEventRe.Mouse.stopPropagation(evt))
+        onKeyDown=(
+          (evt) =>
+            switch (ReactEventRe.Keyboard.key(evt)) {
+            | "Enter" =>
+              if (text == value) {
+                send(None)
+              } else {
+                onChange(text);
+                if (clear) {
+                  send(Some(value))
+                };
+              }
+            | _ => ()
             }
-          }
-          | _ => ()
-          }
-        })
-        style=(style fontFamily::"inherit" flex::"1" fontSize::"inherit" ())
-        onBlur=(fun _ => {
-          if (text != value) {
-            onChange text; /* TODO I want a different state value that is "waiting" */
-            if (clear) {
-              (update (fun _ _ => ReasonReact.Update (Some value))) ()
+        )
+        style=(style(~fontFamily="inherit", ~flex="1", ~fontSize="inherit", ()))
+        onBlur=(
+          (_) =>
+            if (text != value) {
+              onChange(text); /* TODO I want a different state value that is "waiting" */
+              if (clear) {
+                send(Some(value))
+              };
+            } else {
+              send(None)
             }
-          } else {
-            (update (fun _ _ => ReasonReact.Update None)) ()
-          }
-        })
+        )
       />
     }
-  }
 };
