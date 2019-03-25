@@ -7,7 +7,7 @@ open Cohttp_lwt_unix;
 module CoServer = Cohttp_lwt_unix.Server;
 
 let json = (data) => {
-  let body = Yojson.Safe.to_string(data);
+  let body = Ez2.to_string(data);
   module H = Cohttp.Header;
   let headers = H.init();
   let headers = H.add(headers, "content-type", "application/json");
@@ -77,8 +77,10 @@ let handle_prefix = (meth, path, fn) => {
 };
 
 let maybe_parse = (text) =>
-  try (Some(Yojson.Safe.from_string(text))) {
-  | _ => None
+  try (Ok(
+    Ezjsonm.from_string(text)
+  )) {
+  | _ => Error("Unable to parse")
   };
 
 let get = handle(`GET);
@@ -93,41 +95,70 @@ let post_prefix = handle_prefix(`POST);
 
 let delete_prefix = handle_prefix(`DELETE);
 
-module Get = (Config: SApi.Get, Handler: {let handle: Cohttp.Request.t => Config.response;}) => {
-  handle(`GET, Config.path, (req, _, _) => json(Config.response__to_yojson(Handler.handle(req))));
+module Get = (Config: SApi.Get, Handler: {let handle: Cohttp.Request.t => Config.Response.t;}) => {
+  handle(`GET, Config.path, (req, _, _) => {
+    json(Config.Response.serialize(Handler.handle(req)))
+  });
 };
 
-module Let_syntax = {
-  let bind = (value, ~f) => Lwt.bind(value, f);
+module Await = {
+  let let_ = (value, ~f) => Lwt.bind(value, f);
   let map = (value, ~f) => Lwt.map(f, value);
+};
+
+module Try = {
+  module Double = {
+    let let_ = (value, ~f) => switch value {
+      | Error(error) => error
+      | Ok(v) => f(v)
+    }
+  };
+  let let_ = (value, ~f) => switch value {
+    | Error(error) => Error(error)
+    | Ok(v) => f(v)
+  };
+  let try_ = (value, ~f) => switch value {
+    | Ok(v) => Ok(v)
+    | Error(error) => f(error)
+  }
 };
 
 module Post =
        (
          Config: SApi.Post,
-         Handler: {let handle: (Cohttp.Request.t, Config.request) => Config.response;}
+         Handler: {let handle: (Cohttp.Request.t, Config.Request.t) => Config.Response.t;}
        ) => {
   handle(
     `POST,
     Config.path,
     (req, body, _) => {
-      [%await let body = Cohttp_lwt_body.to_string(body)];
-      [@else CoServer.respond_string(~status=`Bad_request, ~body="", ())]
-      [%guard let Some((data)) = maybe_parse(body)];
-      [@else CoServer.respond_string(~status=`Bad_request, ~body="", ())]
-      [%guard let Some((data)) = Config.request__from_yojson(data)];
-      json(Config.response__to_yojson(Handler.handle(req, data)));
+      let%Await body = Cohttp_lwt.Body.to_string(body);
+      let m = {
+        let%Try data = try%Try (maybe_parse(body)) {
+          | message => Error(CoServer.respond_string(~status=`Bad_request, ~body="", ()))
+        };
+        let%Try data = try%Try (Config.Request.deserialize(data)) {
+          | messages => Error(CoServer.respond_string(~status=`Bad_request, ~body="", ()))
+        };
+        Ok(json(Config.Response.serialize(Handler.handle(req, data))))
+      };
+      switch m {
+        | Ok(m) => m
+        | Error(m) => m
+      }
     }
   );
 };
 
 let server = (port) => {
   let handlers = List.rev(handlers^);
-  let rec next = (req, body, path, items, ()) =>
+  let rec next = (req, body, path, items, ()) => {
+    print_endline("Handler next");
     switch items {
     | [] => CoServer.respond_string(~status=`Not_found, ~body="Not found", ())
     | [fn, ...rest] => fn(req, body, path, next(req, body, path, rest))
     };
+  };
   let callback = (_conn, req, body) => {
     let path = req |> Request.uri |> Uri.path;
     next(req, body, path, handlers, ());

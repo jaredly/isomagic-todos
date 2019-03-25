@@ -8,7 +8,7 @@ module type Endpoint = {
 module type SerdeType = {
   type t;
   let serialize: t => Serde.target;
-  let deserialize: Serde.target => Belt.Result.t(t, list(string))
+  let deserialize: Serde.target => Belt.Result.t(t, list(string));
 };
 
 // TODO serializeResponse, deserializeResponse or something...
@@ -22,7 +22,6 @@ module type Post = {
   module Response: SerdeType;
   let path: string;
 };
-
 
 // module type Serde = {
 //   type t;

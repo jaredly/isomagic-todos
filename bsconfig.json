@@ -6,7 +6,9 @@
       "dir": "src",
       "subdirs": [
         "client",
-        "shared"
+        {"dir": "shared","subdirs": [
+          "locked"
+        ]}
       ]
     }
   ],

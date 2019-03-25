@@ -1,5 +1,6 @@
 (executable
  (name main)
  (public_name server)
- ; (preprocess (pps (ppx_magic ppx_guard ppx_async)))
- (libraries shared lwt cohttp cohttp.lwt yojson))
+ (preprocess (pps let-anything-esy.ppx))
+ (libraries lwt cohttp cohttp.lwt isomagic-shared isomagic-shared.types
+ ))

@@ -12,16 +12,13 @@ let post: (string, Js.Json.t, Js.Json.t => unit) => unit = [%bs.raw
 
 module Post = (Config: SApi.Post) => {
   let run = (body, onDone) =>
-    post(
-      Config.path,
-      Config.Request.serialize(body),
-      (data) =>
-        switch (Config.Response.deserialize(data)) {
-        | Error(error) => Js.log("Failed to parse data")
-        | Ok(result) =>
-          // Js.log(Config.Response.(result));
-          onDone(result);
-        }
+    post(Config.path, Config.Request.serialize(body), data =>
+      switch (Config.Response.deserialize(data)) {
+      | Error(error) => Js.log("Failed to parse data")
+      | Ok(result) =>
+        // Js.log(Config.Response.(result));
+        onDone(result)
+      }
     );
 };
 

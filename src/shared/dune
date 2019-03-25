@@ -1,2 +1,7 @@
 
-(library (name shared))
+(library
+(name SApi)
+(public_name isomagic-shared)
+(flags -open All_types)
+(libraries Serde All_types)
+)

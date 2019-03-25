@@ -1,4 +1,4 @@
-open Shared.Types;
+open All_types.Types;
 
 type appState = {
   nextId: int,
@@ -7,7 +7,7 @@ type appState = {
 
 let appState = ref({nextId: 1, todos: [{id: 0, text: "Add some things to do", completed: None}]});
 
-Server.get_prefix("/", Server.serveStatic("./public"));
+Server.get_prefix("/", Server.serveStatic("../public"));
 
 module type E = {};
 

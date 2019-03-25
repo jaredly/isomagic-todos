@@ -12,6 +12,8 @@ S /Users/jared/clone/apps/isomagic-todos/node_modules/bs-css/lib/ocaml
 B /Users/jared/clone/apps/isomagic-todos/node_modules/bs-css/lib/ocaml
 S src/shared
 B lib/bs/src/shared
+S src/shared/locked
+B lib/bs/src/shared/locked
 S src/client
 B lib/bs/src/client
 ####BSB GENERATED: NO EDIT}

@@ -13,7 +13,7 @@ module type Config = {
       state,
       ReasonReact.noRetainedProps,
       ReasonReact.noRetainedProps,
-      action
+      action,
     );
 };
 
@@ -33,28 +33,32 @@ module F = (Config: Config) => {
     | Error(string)
     | Loaded(Config.Data.t);
   let component = ReasonReact.reducerComponent("Loader");
-  let make = (_children) => {
+  let make = _children => {
     ...component,
     initialState: () => Loading,
     reducer: (action, state) => ReasonReact.Update(action),
     didMount: ({send}) => {
-      fetchJson(
-        Config.url,
-        (json) => 
-            switch (Config.Data.deserialize(json)) {
-            | Error(_error) => ()
-            | Ok((data)) => send(Loaded(data))
-            }
+      fetchJson(Config.url, json =>
+        switch (Config.Data.deserialize(json)) {
+        | Error(_error) => Js.log2("Failed to load", _error)
+        | Ok(data) => send(Loaded(data))
+        }
       );
     },
-    render: (self) =>
-      switch self.state {
+    render: self =>
+      switch (self.state) {
       | Loading =>
-        <div style=(style(~alignItems="center", ~padding="5px", ~color="#ddd", ()))>
-          (str("Loading"))
+        <div
+          style={style(
+            ~alignItems="center",
+            ~padding="5px",
+            ~color="#ddd",
+            (),
+          )}>
+          {str("Loading")}
         </div>
-      | Error(text) => <div> (str("Error")) (str(text)) </div>
+      | Error(text) => <div> {str("Error")} {str(text)} </div>
       | Loaded(data) => <Config data />
-      }
+      },
   };
 };

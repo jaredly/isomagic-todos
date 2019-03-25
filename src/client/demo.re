@@ -20,7 +20,7 @@ type jumbo = {
   nums: array(int),
   nested,
   cross_module: Lib.person,
-  sum: list(option(sum))
+  sum: list(option(sum)),
 };
 
 Devtools.register();
@@ -33,18 +33,18 @@ let value = {
   string_list: ["one", "two", "threee"],
   nums: [|1, 2, 3|],
   nested: {
-    name: "Me"
+    name: "Me",
   },
   cross_module: {
-    Lib.name: "Reason"
+    Lib.name: "Reason",
   },
-  sum: [None, None, Some(Three), Some(One(2)), Some(Two(4.5, "hi"))]
+  sum: [None, None, Some(Three), Some(One(2)), Some(Two(4.5, "hi"))],
 };
 
-Js.log((value));
+Js.log(value);
 
 Js.log(10);
 
-let ss = (value);
+let ss = value;
 
 Js.log(ss);
