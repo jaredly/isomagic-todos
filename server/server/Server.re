@@ -37,8 +37,7 @@ let serveStatic = (base, req, body, path, next) => {
 let handlers = ref([]);
 
 let all = (path, fn) =>
-  :=(
-    handlers,
+  handlers :=
     [
       (req, body, path', next) =>
         if (path == path') {
@@ -47,12 +46,10 @@ let all = (path, fn) =>
           next();
         },
       ...handlers^
-    ]
-  );
+    ];
 
 let handle = (meth, path, fn) =>
-  :=(
-    handlers,
+    handlers :=
     [
       (req, body, path', next) =>
         if (meth == Request.meth(req) && path == path') {
@@ -61,13 +58,11 @@ let handle = (meth, path, fn) =>
           next();
         },
       ...handlers^
-    ]
-  );
+    ];
 
 let handle_prefix = (meth, path, fn) => {
   let size = String.length(path);
-  :=(
-    handlers,
+    handlers:=
     [
       (req, body, path', next) => {
         let pathLen = String.length(path');
@@ -78,8 +73,7 @@ let handle_prefix = (meth, path, fn) => {
         };
       },
       ...handlers^
-    ]
-  );
+    ];
 };
 
 let maybe_parse = (text) =>
@@ -132,7 +126,7 @@ let server = (port) => {
   let rec next = (req, body, path, items, ()) =>
     switch items {
     | [] => CoServer.respond_string(~status=`Not_found, ~body="Not found", ())
-    | [@implicit_arity] ::(fn, rest) => fn(req, body, path, next(req, body, path, rest))
+    | [fn, ...rest] => fn(req, body, path, next(req, body, path, rest))
     };
   let callback = (_conn, req, body) => {
     let path = req |> Request.uri |> Uri.path;

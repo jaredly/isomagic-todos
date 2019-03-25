@@ -27,7 +27,7 @@ let _: list((module E)) = [
          let id = appState^.nextId;
          let todo = {completed: None, id, text};
          let todos = List.append(appState^.todos, [todo]);
-         :=(appState, {nextId: id + 1, todos});
+         appState := {nextId: id + 1, todos};
          todos;
        };
      }
@@ -38,7 +38,7 @@ let _: list((module E)) = [
      {
        let handle = (req, id) => {
          let todos = List.filter((item) => item.id !== id, appState^.todos);
-         :=(appState, {...appState^, todos});
+         appState := {...appState^, todos};
          todos;
        };
      }
@@ -49,7 +49,7 @@ let _: list((module E)) = [
      {
        let handle = (req, data) => {
          let todos = List.map((item) => item.id === data.id ? data : item, appState^.todos);
-         :=(appState, {...appState^, todos});
+         appState := {...appState^, todos};
          todos;
        };
      }

@@ -1,8 +1,0 @@
-(jbuild_version 1)
-
-(executable (
-  (name main)
-  (public_name server)
-  (preprocess (pps (ppx_magic ppx_guard ppx_async)))
-  (libraries (shared lwt cohttp cohttp.lwt yojson))
-  ))
