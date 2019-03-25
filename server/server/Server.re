@@ -7,7 +7,7 @@ open Cohttp_lwt_unix;
 module CoServer = Cohttp_lwt_unix.Server;
 
 let json = (data) => {
-  let body = Ez2.to_string(data);
+  let body = Ezjsonm.value_to_string(data);
   module H = Cohttp.Header;
   let headers = H.init();
   let headers = H.add(headers, "content-type", "application/json");
@@ -78,7 +78,7 @@ let handle_prefix = (meth, path, fn) => {
 
 let maybe_parse = (text) =>
   try (Ok(
-    Ezjsonm.from_string(text)
+    Ezjsonm.value_from_string(text)
   )) {
   | _ => Error("Unable to parse")
   };

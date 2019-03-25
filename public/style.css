@@ -4,6 +4,12 @@ body {
     font-weight: 200;
 }
 
+input {
+    font-family: inherit;
+    font-weight: inherit;
+    font-style: inherit;
+}
+
 div {
     flex-direction: column;
     display: flex;

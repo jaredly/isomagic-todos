@@ -3,7 +3,7 @@
   "dependencies": {
     "ocaml": ">4.02.3",
     "@opam/dune": "*",
-    "@opam/ezjsonm": "*",
+    "ezjsonm": "jaredly/ezjsonm#esy",
     "belt": "jaredly/belt",
     "@esy-ocaml/reason": "*"
   },

@@ -3,14 +3,7 @@ open! Types;
 let str = ReasonReact.string;
 
 // let style = ReactDOMRe.Style.make;
-
-module TodoItem = {
-  let component = ReasonReact.statelessComponent("Todo");
-  let make = (~item, ~onToggle, ~onEdit, _) => {
-    ...component,
-    render: _ =>
-      <div
-        className=Css.(
+let todoItemStyle = Css.(
           style([
             backgroundColor(white),
             alignItems(`center),
@@ -19,7 +12,15 @@ module TodoItem = {
             padding(px(10)),
             hover([backgroundColor(hex("eee"))]),
           ])
-        )
+        );
+
+module TodoItem = {
+  let component = ReasonReact.statelessComponent("Todo");
+  let make = (~item, ~onToggle, ~onEdit, _) => {
+    ...component,
+    render: _ =>
+      <div
+        className=todoItemStyle
         onClick=onToggle>
         <input
           type_="checkbox"
@@ -73,13 +74,15 @@ module Todos = {
            )
            |> Array.of_list
            |> ReasonReact.array}
+           <div className=todoItemStyle>
           <Editor
             value=""
-            className=Css.(style([padding2(~v=px(10), ~h=px(20))]))
+            // className=Css.(style([padding2(~v=px(10), ~h=px(20))]))
             onChange={text => Api.AddTodo.run(text, send)}
             placeholder="Add an item"
             clear=true
           />
+          </div>
         </div>;
         // let updateTodos = update((todos, _) => ReasonReact.Update(todos));
     },

@@ -1,5 +1,6 @@
 EXCLUDE_QUERY_DIR
 B /Users/jared/.esy/3___________________________________________________________________/i/belt-8ec1f6ae/lib/belt
+B /Users/jared/.esy/3___________________________________________________________________/i/ezjsonm-c252ee44/lib/ezjsonm
 B /Users/jared/.esy/3___________________________________________________________________/i/ocaml-4.6.10-1dc037cc/lib/ocaml
 B /Users/jared/.esy/3___________________________________________________________________/i/ocaml-4.6.10-1dc037cc/lib/ocaml/threads
 B /Users/jared/.esy/3___________________________________________________________________/i/opam__s__astring-opam__c__0.8.3-a2e7f011/lib/astring
@@ -14,7 +15,6 @@ B /Users/jared/.esy/3___________________________________________________________
 B /Users/jared/.esy/3___________________________________________________________________/i/opam__s__conduit_lwt-opam__c__1.3.0-f51d5f64/lib/conduit-lwt
 B /Users/jared/.esy/3___________________________________________________________________/i/opam__s__conduit_lwt_unix-opam__c__1.3.0-2ffe3ce8/lib/conduit-lwt-unix
 B /Users/jared/.esy/3___________________________________________________________________/i/opam__s__cstruct-opam__c__3.7.0-7261a4bb/lib/cstruct
-B /Users/jared/.esy/3___________________________________________________________________/i/opam__s__ezjsonm-opam__c__1.0.0-0a1e7dc7/lib/ezjsonm
 B /Users/jared/.esy/3___________________________________________________________________/i/opam__s__fieldslib-opam__c__v0.11.0-e278b921/lib/fieldslib
 B /Users/jared/.esy/3___________________________________________________________________/i/opam__s__fmt-opam__c__0.8.5-64e33b37/lib/fmt
 B /Users/jared/.esy/3___________________________________________________________________/i/opam__s__hex-opam__c__1.3.0-02a2da67/lib/hex
@@ -41,11 +41,12 @@ B /Users/jared/.esy/3___________________________________________________________
 B /Users/jared/.esy/3___________________________________________________________________/i/opam__s__uri-opam__c__2.2.0-f7d6a0d0/lib/uri/services
 B /Users/jared/.esy/3___________________________________________________________________/i/opam__s__uri-opam__c__2.2.0-f7d6a0d0/lib/uri/sexp
 B /Users/jared/.esy/3___________________________________________________________________/i/opam__s__uutf-opam__c__1.0.2-baf42320/lib/uutf
-B /Users/jared/clone/apps/isomagic-todos/server/_esy/default/store/i/isomagic_shared-a30cea7f/lib/isomagic-shared
-B /Users/jared/clone/apps/isomagic-todos/server/_esy/default/store/i/isomagic_shared-a30cea7f/lib/isomagic-shared/Serde
-B /Users/jared/clone/apps/isomagic-todos/server/_esy/default/store/i/isomagic_shared-a30cea7f/lib/isomagic-shared/types
-B /Users/jared/clone/apps/isomagic-todos/server/_esy/default/store/b/isomagic_todos-bc3131e0/default/server/.main.eobjs/byte
+B /Users/jared/clone/apps/isomagic-todos/server/_esy/default/store/i/isomagic_shared-b2f36703/lib/isomagic-shared
+B /Users/jared/clone/apps/isomagic-todos/server/_esy/default/store/i/isomagic_shared-b2f36703/lib/isomagic-shared/Serde
+B /Users/jared/clone/apps/isomagic-todos/server/_esy/default/store/i/isomagic_shared-b2f36703/lib/isomagic-shared/types
+B /Users/jared/clone/apps/isomagic-todos/server/_esy/default/store/b/isomagic_todos-22f31068/default/server/.main.eobjs/byte
 S /Users/jared/.esy/3___________________________________________________________________/i/belt-8ec1f6ae/lib/belt
+S /Users/jared/.esy/3___________________________________________________________________/i/ezjsonm-c252ee44/lib/ezjsonm
 S /Users/jared/.esy/3___________________________________________________________________/i/ocaml-4.6.10-1dc037cc/lib/ocaml
 S /Users/jared/.esy/3___________________________________________________________________/i/ocaml-4.6.10-1dc037cc/lib/ocaml/threads
 S /Users/jared/.esy/3___________________________________________________________________/i/opam__s__astring-opam__c__0.8.3-a2e7f011/lib/astring
@@ -60,7 +61,6 @@ S /Users/jared/.esy/3___________________________________________________________
 S /Users/jared/.esy/3___________________________________________________________________/i/opam__s__conduit_lwt-opam__c__1.3.0-f51d5f64/lib/conduit-lwt
 S /Users/jared/.esy/3___________________________________________________________________/i/opam__s__conduit_lwt_unix-opam__c__1.3.0-2ffe3ce8/lib/conduit-lwt-unix
 S /Users/jared/.esy/3___________________________________________________________________/i/opam__s__cstruct-opam__c__3.7.0-7261a4bb/lib/cstruct
-S /Users/jared/.esy/3___________________________________________________________________/i/opam__s__ezjsonm-opam__c__1.0.0-0a1e7dc7/lib/ezjsonm
 S /Users/jared/.esy/3___________________________________________________________________/i/opam__s__fieldslib-opam__c__v0.11.0-e278b921/lib/fieldslib
 S /Users/jared/.esy/3___________________________________________________________________/i/opam__s__fmt-opam__c__0.8.5-64e33b37/lib/fmt
 S /Users/jared/.esy/3___________________________________________________________________/i/opam__s__hex-opam__c__1.3.0-02a2da67/lib/hex
@@ -87,9 +87,9 @@ S /Users/jared/.esy/3___________________________________________________________
 S /Users/jared/.esy/3___________________________________________________________________/i/opam__s__uri-opam__c__2.2.0-f7d6a0d0/lib/uri/services
 S /Users/jared/.esy/3___________________________________________________________________/i/opam__s__uri-opam__c__2.2.0-f7d6a0d0/lib/uri/sexp
 S /Users/jared/.esy/3___________________________________________________________________/i/opam__s__uutf-opam__c__1.0.2-baf42320/lib/uutf
-S /Users/jared/clone/apps/isomagic-todos/server/_esy/default/store/i/isomagic_shared-a30cea7f/lib/isomagic-shared
-S /Users/jared/clone/apps/isomagic-todos/server/_esy/default/store/i/isomagic_shared-a30cea7f/lib/isomagic-shared/Serde
-S /Users/jared/clone/apps/isomagic-todos/server/_esy/default/store/i/isomagic_shared-a30cea7f/lib/isomagic-shared/types
+S /Users/jared/clone/apps/isomagic-todos/server/_esy/default/store/i/isomagic_shared-b2f36703/lib/isomagic-shared
+S /Users/jared/clone/apps/isomagic-todos/server/_esy/default/store/i/isomagic_shared-b2f36703/lib/isomagic-shared/Serde
+S /Users/jared/clone/apps/isomagic-todos/server/_esy/default/store/i/isomagic_shared-b2f36703/lib/isomagic-shared/types
 S .
-FLG -ppx '/Users/jared/clone/apps/isomagic-todos/server/_esy/default/store/b/isomagic_todos-bc3131e0/default/.ppx/725e931e634fa304d75f70b7d5d3947b/ppx.exe --as-ppx'
+FLG -ppx '/Users/jared/clone/apps/isomagic-todos/server/_esy/default/store/b/isomagic_todos-22f31068/default/.ppx/725e931e634fa304d75f70b7d5d3947b/ppx.exe --as-ppx'
 FLG -w -40

@@ -25,6 +25,7 @@
     "@opam/conduit-lwt-unix": "1.3.0",
     "@opam/cohttp-lwt-unix": "1.2.0",
     "@esy-ocaml/reason": "*",
+    "ezjsonm": "jaredly/ezjsonm#esy",
     "@opam/ppx_sexp_conv": "v0.11.2",
     "let-anything-esy": "*",
     "@opam/sexplib": "v0.11.0",
