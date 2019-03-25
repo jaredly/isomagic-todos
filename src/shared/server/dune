@@ -1,0 +1,4 @@
+(library (name Serde) (public_name isomagic-shared.Serde)
+(flags -open All_types)
+(libraries All_types ezjsonm belt)
+)

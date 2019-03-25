@@ -1,0 +1,8 @@
+EXCLUDE_QUERY_DIR
+B /Users/jared/clone/apps/isomagic-todos/src/shared/_esy/default/store/b/isomagic_shared-88da164f/default/.shared.objs/byte
+B /Users/jared/clone/apps/isomagic-todos/src/shared/_esy/default/store/b/isomagic_shared-88da164f/default/locked/.All_types.objs/byte
+B /Users/jared/clone/apps/isomagic-todos/src/shared/_esy/default/store/b/isomagic_shared-88da164f/default/server/.Serde.objs/byte
+S .
+S locked
+S server
+FLG -open Shared__ -open All_types

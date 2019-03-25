@@ -153,7 +153,6 @@ module Post =
 let server = (port) => {
   let handlers = List.rev(handlers^);
   let rec next = (req, body, path, items, ()) => {
-    print_endline("Handler next");
     switch items {
     | [] => CoServer.respond_string(~status=`Not_found, ~body="Not found", ())
     | [fn, ...rest] => fn(req, body, path, next(req, body, path, rest))

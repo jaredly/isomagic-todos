@@ -1,0 +1,14 @@
+{
+  "name": "isomagic-shared",
+  "dependencies": {
+    "ocaml": ">4.02.3",
+    "@opam/dune": "*",
+    "@opam/ezjsonm": "*",
+    "belt": "jaredly/belt",
+    "@esy-ocaml/reason": "*"
+  },
+  "esy": {
+    "build": "dune build -p #{self.name}",
+    "buildsInSource": true
+  }
+}
