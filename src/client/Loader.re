@@ -3,9 +3,6 @@ module type Config = {
   type state;
   type action;
   let url: string;
-  // let data__from_json: Js.Json.t => option(data);
-  // let data__to_json: data => Js.Json.t;
-  // let data__to_devtools: data => Js.t({.});
   let make:
     (~data: Data.t, array(int)) =>
     ReasonReact.componentSpec(
